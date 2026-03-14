@@ -1,6 +1,7 @@
 ﻿namespace VideoGameCharacterApi.Services
-{
-    public class VideoGameService
+{ 
+    //Implementation Class
+    public class VideoGameService : IVideoGameCharacterService
     {
 
     }
