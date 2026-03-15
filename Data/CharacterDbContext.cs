@@ -1,6 +1,8 @@
-﻿namespace VideoGameCharacterApi.Data
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace VideoGameCharacterApi.Data
 {
-    public class CharacterDbContext
+    public class CharacterDbContext(DbContextOptions<CharacterDbContext> options) : DbContext
     {
 
     }
