@@ -20,11 +20,7 @@ public class VideoGameCharactersController(IVideoGameCharacterService service) :
     public async Task<ActionResult<Character>> GetCharacter(int id)
     {
         var character = await service.GetCharacterByIdAsync(id);
-        if (character is null)
-        {
-            return NotFound();
-        }
-            return Ok(character);
+        return character is null ? NotFound("Character with the given Id was not found.") : Ok(character);
         }
     }
 
