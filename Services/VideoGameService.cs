@@ -32,9 +32,15 @@ namespace VideoGameCharacterApi.Services
             };
         }
 
-        public Task<bool> DeleteCharacterAsync(int id)
+        public async Task<bool> DeleteCharacterAsync(int id)
         {
-            throw new NotImplementedException();
+            var charToDelete = await _context.Characters.FindAsync(id);
+            if (charToDelete is null)
+                return false;
+
+            _context.Characters.Remove(charToDelete);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         //Queries the Characters table and returns every stored character
