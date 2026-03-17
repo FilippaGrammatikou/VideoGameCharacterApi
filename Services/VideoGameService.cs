@@ -9,9 +9,27 @@ namespace VideoGameCharacterApi.Services
     //Uses CharacterDbContext to read and later modify character data in SQL Server
     public class VideoGameService(CharacterDbContext _context) : IVideoGameCharacterService
     {
-        public Task<CharacterResponseDto> AddCharacterAsync(CreateCharacterRequest character)
+        public async Task<CharacterResponseDto> AddCharacterAsync(CreateCharacterRequest character)
         {
-            throw new NotImplementedException();
+            //Map the incoming request data to the database entity
+            var newCharacter = new Character
+            {
+                Name = character.Name,
+                Game = character.Game,
+                Role = character.Role,
+            };
+
+            //Save the new character to the database
+            _context.Characters.Add(newCharacter);
+            await _context.SaveChangesAsync();
+
+            //Return the saved character as a response DTO
+            return new CharacterResponseDto
+            {
+                Id = newCharacter.Id,
+                Game = newCharacter.Game,
+                Role = newCharacter.Role
+            };
         }
 
         public Task<bool> DeleteCharacterAsync(int id)
