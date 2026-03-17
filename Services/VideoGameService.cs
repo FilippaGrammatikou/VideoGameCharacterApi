@@ -14,7 +14,7 @@ namespace VideoGameCharacterApi.Services
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteCharacterAsynch(int id)
+        public Task<bool> DeleteCharacterAsync(int id)
         {
             throw new NotImplementedException();
         }
