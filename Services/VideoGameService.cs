@@ -18,11 +18,9 @@ namespace VideoGameCharacterApi.Services
                 Game = character.Game,
                 Role = character.Role,
             };
-
             //Save the new character to the database
             _context.Characters.Add(newCharacter);
             await _context.SaveChangesAsync();
-
             //Return the saved character as a response DTO
             return new CharacterResponseDto
             {
