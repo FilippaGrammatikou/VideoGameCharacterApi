@@ -11,6 +11,6 @@ namespace VideoGameCharacterApi.Services
         Task<CharacterResponseDto?> GetCharacterByIdAsync(int id);
         Task<CharacterResponseDto> AddCharacterAsync(CreateCharacterRequest character);
         Task<bool> UpdateCharacterAsync(int id, UpdateCharacterRequest character);
-        Task<bool> DeleteCharacterAsynch(int id);
+        Task<bool> DeleteCharacterAsync(int id);
     }
 }
