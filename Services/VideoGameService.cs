@@ -9,7 +9,7 @@ namespace VideoGameCharacterApi.Services
     //Uses CharacterDbContext to read and later modify character data in SQL Server
     public class VideoGameService(CharacterDbContext _context) : IVideoGameCharacterService
     {
-        public Task<CharacterResponseDto> AddCharacterAsync(Character character)
+        public Task<CharacterResponseDto> AddCharacterAsync(CreateCharacterRequest character)
         {
             throw new NotImplementedException();
         }
@@ -23,6 +23,7 @@ namespace VideoGameCharacterApi.Services
         public async Task<List<CharacterResponseDto>> GetAllCharactersAsync()
            => await _context.Characters.Select(c=>new CharacterResponseDto
            {
+               Id = c.Id,
                Name =c.Name,
                Game = c.Game,
                Role = c.Role
@@ -35,7 +36,8 @@ namespace VideoGameCharacterApi.Services
                 .Where(c => c.Id == id)
                 .Select(c => new CharacterResponseDto
                 {
-                    Name=c.Name,
+                    Id = c.Id,
+                    Name = c.Name,
                     Game=c.Game,
                     Role=c.Role
                 })
@@ -44,7 +46,7 @@ namespace VideoGameCharacterApi.Services
             return result;
         }
 
-        public Task<bool> UpdateCharacterAsync(int id, Character character)
+        public Task<bool> UpdateCharacterAsync(int id, UpdateCharacterRequest character)
         {
             throw new NotImplementedException();
         }
