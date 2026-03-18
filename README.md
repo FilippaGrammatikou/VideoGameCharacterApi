@@ -23,16 +23,60 @@ The project is centered on a simple video game character domain and explores how
 
 ---
 
+## Getting started
+
+To run the project locally, make sure the following are available:
+
+| **Requirement** | **Purpose** |
+|---|---|
+| **.NET SDK** | build and run the API |
+| **SQL Server / LocalDB** | local database engine |
+| **EF Core tools** | apply migrations from the command line |
+
+### 1. Configure the database connection
+
+Open `appsettings.json` and update the SQL Server connection string so it matches your local environment.
+
+### 2. Restore project dependencies
+
+```bash
+dotnet restore
+```
+
+### 3. Apply the migrations
+
+```bash
+dotnet ef database update
+```
+
+This will create or update the local database using the migrations included in the project.
+
+### 4. Run the API
+
+```bash
+dotnet run
+```
+
+### 5. Test the API
+
+Once the application is running, open the API through the configured OpenAPI / Scalar setup or send requests to:
+
+`http://localhost:5153`
+
+You can also test the endpoints with Postman.
+
+---
+
 ## Core technologies
 
 | **Technology** | **Role in the project** |
 |---|---|
 | **ASP.NET Core** | Web API framework and HTTP pipeline |
 | **Entity Framework Core** | ORM and data access |
-| **SQL Server** | Relational database |
-| **DTOs** | Request and response shaping |
-| **Service layer** | Separation of controller and data/business logic |
-| **OpenAPI / Scalar** | Endpoint inspection and API exploration |
+| **SQL Server** | relational database |
+| **DTOs** | request and response shaping |
+| **Service layer** | separation of controller and data/business logic |
+| **OpenAPI / Scalar** | endpoint inspection and API exploration |
 
 ---
 
@@ -52,11 +96,11 @@ The current API supports the core CRUD workflow for video game characters:
 
 | **Folder** | **Responsibility** |
 |---|---|
-| `Controllers` | Endpoint definitions and HTTP handling |
+| `Controllers` | endpoint definitions and HTTP handling |
 | `Data` | EF Core database context |
-| `Dtos` | Request and response models |
-| `Models` | Domain entities |
-| `Services` | Service contracts and implementations |
+| `Dtos` | request and response models |
+| `Models` | domain entities |
+| `Services` | service contracts and implementations |
 | `Migrations` | EF Core migration files |
 
 ---
@@ -64,12 +108,3 @@ The current API supports the core CRUD workflow for video game characters:
 ## Purpose
 
 This repository is intended as a learning-stage backend project rather than a finished production system. Its role is to strengthen practical understanding of ASP.NET Core Web APIs, layered application structure, EF Core with SQL Server, and DTO-based CRUD design.
-
----
-
-<details>
-<summary><strong>Additional context</strong></summary>
-
-This project forms part of a broader .NET backend learning path and is meant to reflect implementation practice, architectural familiarity, and progression rather than final flagship portfolio work.
-
-</details>
