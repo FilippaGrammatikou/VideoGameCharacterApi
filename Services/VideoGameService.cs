@@ -25,6 +25,7 @@ namespace VideoGameCharacterApi.Services
             return new CharacterResponseDto
             {
                 Id = newCharacter.Id,
+                Name = newCharacter.Name,
                 Game = newCharacter.Game,
                 Role = newCharacter.Role
             };
