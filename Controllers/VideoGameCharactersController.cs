@@ -18,28 +18,58 @@ public class VideoGameCharactersController(IVideoGameCharacterService service) :
         //Returns a single character by id, or 404 if no matching character exists.
         [HttpGet("{id:int}")]
         public async Task<ActionResult<CharacterResponseDto>> GetCharacter(int id)
-            {
+        {
             var character = await service.GetCharacterByIdAsync(id);
-            return character is null ? NotFound("Character with the given Id was not found.") : Ok(character);
+            if (character is null)
+            {
+                return Problem(
+                    statusCode: StatusCodes.Status404NotFound,
+                    title: "Character not found.",
+                    detail: $"No character with id {id} was found.",
+                    instance: HttpContext.Request.Path,
+                    type: "https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.5");
             }
+            return Ok(character); //200 OK
+        }
 
+        //the return type is partly about data, and partly about status meaning
         [HttpPost]
         public async Task<ActionResult<CharacterResponseDto>> AddCharacter(CreateCharacterRequest character)
         {
             var createdCharacter = await service.AddCharacterAsync(character);
-            return CreatedAtAction(nameof(GetCharacter), new {id=createdCharacter.Id}, createdCharacter);
-        }
+            return CreatedAtAction(nameof(GetCharacter), new {id=createdCharacter.Id}, createdCharacter); //201 Created, can be retrieved through GetCharacter using this id
+    }
+
         [HttpPut("{id:int}")]
         public async Task<ActionResult> UpdateCharacter(int id, UpdateCharacterRequest character)
             {
             var updated = await service.UpdateCharacterAsync(id, character);
-            return updated ? NoContent() : NotFound("Character with the given ID was not found");
+            if (!updated)
+            {
+                return Problem(
+                    statusCode: StatusCodes.Status404NotFound,
+                    title: "Character not found.",
+                    detail: $"No character with id {id} was found.",
+                    instance: HttpContext.Request.Path,
+                    type: "https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.5");
             }
+            return NoContent(); //204 No Content, request succeeded, no response body is necessary
+        }
+
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteCharacter(int id) 
             {
             var deleted = await service.DeleteCharacterAsync(id);
-            return deleted ? NoContent() : NotFound("Character with the given ID was not found");
+            if (!deleted)
+            {
+                return Problem(
+                    statusCode: StatusCodes.Status404NotFound,
+                    title: "Character not found.",
+                    detail: $"No character with id {id} was found.",
+                    instance: HttpContext.Request.Path,
+                    type: "https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.5");
+            }
+            return NoContent(); //204 No Content, request succeeded, no response body is necessary
         }
  }
 
