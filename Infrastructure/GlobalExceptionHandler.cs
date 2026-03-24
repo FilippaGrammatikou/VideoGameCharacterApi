@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
+//Unexpected failure 500
 namespace VideoGameCharacterApi.Infrastructure
 {
+    //IExceptionHandler is the centralized ASP.NET Core mechanism for handling exceptions in one place
     public sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
     {
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
