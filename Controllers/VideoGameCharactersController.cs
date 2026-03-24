@@ -15,10 +15,10 @@ public class VideoGameCharactersController(IVideoGameCharacterService service) :
         public async Task<ActionResult<List<CharacterResponseDto>>> GetCharacters()
                 => Ok(await service.GetAllCharactersAsync());
 
-        // Returns a single character by id, or 404 if no matching character exists.
-        [HttpGet("GetCharacterById/{id}")]
+        //Returns a single character by id, or 404 if no matching character exists.
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<CharacterResponseDto>> GetCharacter(int id)
-        {
+            {
             var character = await service.GetCharacterByIdAsync(id);
             return character is null ? NotFound("Character with the given Id was not found.") : Ok(character);
             }
@@ -29,17 +29,17 @@ public class VideoGameCharactersController(IVideoGameCharacterService service) :
             var createdCharacter = await service.AddCharacterAsync(character);
             return CreatedAtAction(nameof(GetCharacter), new {id=createdCharacter.Id}, createdCharacter);
         }
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<ActionResult> UpdateCharacter(int id, UpdateCharacterRequest character)
-        {
+            {
             var updated = await service.UpdateCharacterAsync(id, character);
             return updated ? NoContent() : NotFound("Character with the given ID was not found");
+            }
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> DeleteCharacter(int id) 
+            {
+            var deleted = await service.DeleteCharacterAsync(id);
+            return deleted ? NoContent() : NotFound("Character with the given ID was not found");
         }
-    [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteCharacter(int id) 
-    {
-        var deleted = await service.DeleteCharacterAsync(id);
-        return deleted ? NoContent() : NotFound("Character with the given ID was not found");
-    }
  }
 
