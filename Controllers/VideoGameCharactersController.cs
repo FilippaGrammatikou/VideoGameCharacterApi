@@ -32,7 +32,7 @@ public class VideoGameCharactersController(IVideoGameCharacterService service) :
             return Ok(character); //200 OK
         }
 
-        //the return type is partly about data, and partly about status meaning
+        //The return type is partly about data, and partly about status meaning
         [HttpPost]
         public async Task<ActionResult<CharacterResponseDto>> AddCharacter(CreateCharacterRequest character)
         {
