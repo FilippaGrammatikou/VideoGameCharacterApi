@@ -38,7 +38,7 @@ public class VideoGameCharactersController(IVideoGameCharacterService service) :
         {
             var createdCharacter = await service.AddCharacterAsync(character);
             return CreatedAtAction(nameof(GetCharacter), new {id=createdCharacter.Id}, createdCharacter); //201 Created, can be retrieved through GetCharacter using this id
-    }
+        }
 
         [HttpPut("{id:int}")]
         public async Task<ActionResult> UpdateCharacter(int id, UpdateCharacterRequest character)
