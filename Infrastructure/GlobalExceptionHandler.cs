@@ -35,6 +35,7 @@ namespace VideoGameCharacterApi.Infrastructure
             };
 
             //"traceId" helps correlate this client-facing error with server logs.
+            //can search your logs for that same trace identifier and find the exact logged exception.
             problemDetails.Extensions["traceId"] = httpContext.TraceIdentifier;
 
             //Explicitly set the HTTP status code on the response to 500
