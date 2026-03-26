@@ -1,12 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using VideoGameCharacterApi.Data;
+using VideoGameCharacterApi.Infrastructure;
 using VideoGameCharacterApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //Add services to the container.
 builder.Services.AddControllers();
+
+//registers the default problem-details service for standardized API errors
+builder.Services.AddProblemDetails();
+
+//registers the IExceptionHandler implementation
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 //OpenAPI structure for eg. documentations
 builder.Services.AddOpenApi();
