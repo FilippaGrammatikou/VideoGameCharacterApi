@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VideoGameCharacterApi.Dtos;
 using VideoGameCharacterApi.Models;
 using VideoGameCharacterApi.Services;
@@ -10,15 +11,17 @@ namespace VideoGameCharacterApi.Controllers;
 //Thin controller: handles the HTTP request and delegates data retrieval to the service layer.
 public class VideoGameCharactersController(IVideoGameCharacterService service) : ControllerBase
     {
+    [Authorize(Policy ="UserOrAdmin")]
     [HttpGet]
     //Returns all characters through the service abstraction rather than accessing data directly.
     public async Task<ActionResult<List<CharacterResponseDto>>> GetCharacters()
     {
-        throw new InvalidOperationException("Deliberate test exception.");
-        //return Ok(await service.GetAllCharactersAsync());
+        //throw new InvalidOperationException("Deliberate test exception.");
+        return Ok(await service.GetAllCharactersAsync());
     }
 
-        //Returns a single character by id, or 404 if no matching character exists.
+    //Returns a single character by id, or 404 if no matching character exists.
+    [Authorize(Policy = "UserOrAdmin")]
         [HttpGet("{id:int}")]
         public async Task<ActionResult<CharacterResponseDto>> GetCharacter(int id)
         {
@@ -35,7 +38,8 @@ public class VideoGameCharactersController(IVideoGameCharacterService service) :
             return Ok(character); //200 OK
         }
 
-        //The return type is partly about data, and partly about status meaning
+    //The return type is partly about data, and partly about status meaning
+        [Authorize(Policy ="AdminOnly")]
         [HttpPost]
         public async Task<ActionResult<CharacterResponseDto>> AddCharacter(CreateCharacterRequest character)
         {
@@ -43,6 +47,7 @@ public class VideoGameCharactersController(IVideoGameCharacterService service) :
             return CreatedAtAction(nameof(GetCharacter), new {id=createdCharacter.Id}, createdCharacter); //201 Created, can be retrieved through GetCharacter using this id
         }
 
+        [Authorize(Policy="AdminOnly")]
         [HttpPut("{id:int}")]
         public async Task<ActionResult> UpdateCharacter(int id, UpdateCharacterRequest character)
             {
@@ -58,7 +63,7 @@ public class VideoGameCharactersController(IVideoGameCharacterService service) :
             }
             return NoContent(); //204 No Content, request succeeded, no response body is necessary
         }
-
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteCharacter(int id) 
             {
