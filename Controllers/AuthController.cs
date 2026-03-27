@@ -8,15 +8,18 @@ using VideoGameCharacterApi.Dtos;
 
 namespace VideoGameCharacterApi.Controllers
 {
+    //Defines base route for controller: /api/auth
     [Route("api/[controller]")]
     [ApiController]
+    //IConfiguration injected so controller can read JWT settings
     public class AuthController(IConfiguration configuration) : ControllerBase
     {
         [AllowAnonymous]
         [HttpPost("loggin")]
         public ActionResult<LoginResponse> Login(LoginRequest request)
         {
-            if(request.Username == "user" && request.Password == "user123")
+            //Checks whether the provided credentials match the demo Reader account
+            if (request.Username == "user" && request.Password == "user123")
             {
                 return Ok(new LoginResponse
                 {
@@ -24,7 +27,8 @@ namespace VideoGameCharacterApi.Controllers
                     Role = "User"
                 });
             }
-            if(request.Username=="admin" &&  request.Password == "admin123")
+            // Checks whether the provided credentials match the demo Admin account
+            if (request.Username=="admin" &&  request.Password == "admin123")
             {
                 return Ok(new LoginResponse
                 {
@@ -32,23 +36,27 @@ namespace VideoGameCharacterApi.Controllers
                     Role="Admin"
                 });
             }
-            return Unauthorized();
+            //If neither credential pair matches, authentication fails
+            return Unauthorized(); //HTTP 401 Unauthorized
         }
-
+        //Creates and signs a JWT for the given username and role
         private string GenerateToken(string username, string role)
         {
             var key = configuration["Jwt:Key"]!;
             var issuer = configuration["Jwt:Issuer"]!;
             var audience = configuration["Jwt:Audience"]!;
 
+            //Creates the claims that will be stored inside the JWT
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, username),
                 new Claim(ClaimTypes.Role, role)
             };
+            //Converts the configured key string into a cryptographic signing key
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
-            var credentials= new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
-
+            //Defines the signing credentials for the token.HmacSha256 is the algorithm used to sign the token
+            var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+            // Creates the JWT object with issuer, audience, claims, expiry, and signing information
             var token = new JwtSecurityToken(
                 issuer: issuer,
                 audience: audience,
@@ -56,6 +64,7 @@ namespace VideoGameCharacterApi.Controllers
                 expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: credentials);
 
+            //Converts JWT object into the final compact token string that the client will send in the Authorization header
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
