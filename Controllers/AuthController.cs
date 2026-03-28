@@ -18,7 +18,7 @@ namespace VideoGameCharacterApi.Controllers
         [HttpPost("loggin")]
         public ActionResult<LoginResponse> Login(LoginRequest request)
         {
-            //Checks whether the provided credentials match the demo Reader account
+            //Checks whether the provided credentials match the demo User account
             if (request.Username == "user" && request.Password == "user123")
             {
                 return Ok(new LoginResponse
@@ -27,7 +27,8 @@ namespace VideoGameCharacterApi.Controllers
                     Role = "User"
                 });
             }
-            // Checks whether the provided credentials match the demo Admin account
+
+            //Checks whether the provided credentials match the demo Admin account
             if (request.Username=="admin" &&  request.Password == "admin123")
             {
                 return Ok(new LoginResponse
@@ -39,6 +40,7 @@ namespace VideoGameCharacterApi.Controllers
             //If neither credential pair matches, authentication fails
             return Unauthorized(); //HTTP 401 Unauthorized
         }
+
         //Creates and signs a JWT for the given username and role
         private string GenerateToken(string username, string role)
         {
@@ -52,10 +54,13 @@ namespace VideoGameCharacterApi.Controllers
                 new Claim(ClaimTypes.Name, username),
                 new Claim(ClaimTypes.Role, role)
             };
+
             //Converts the configured key string into a cryptographic signing key
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+
             //Defines the signing credentials for the token.HmacSha256 is the algorithm used to sign the token
             var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+
             // Creates the JWT object with issuer, audience, claims, expiry, and signing information
             var token = new JwtSecurityToken(
                 issuer: issuer,
