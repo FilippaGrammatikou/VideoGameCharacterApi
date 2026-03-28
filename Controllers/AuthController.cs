@@ -15,7 +15,7 @@ namespace VideoGameCharacterApi.Controllers
     public class AuthController(IConfiguration configuration) : ControllerBase
     {
         [AllowAnonymous]
-        [HttpPost("loggin")]
+        [HttpPost("login")]
         public ActionResult<LoginResponse> Login(LoginRequest request)
         {
             //Checks whether the provided credentials match the demo User account
