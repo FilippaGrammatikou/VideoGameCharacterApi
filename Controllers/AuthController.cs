@@ -38,7 +38,7 @@ namespace VideoGameCharacterApi.Controllers
                 });
             }
             //If neither credential pair matches, authentication fails
-            return Unauthorized(); //HTTP 401 Unauthorized
+            return Unauthorized(new { message = "Invalid username or password." }); //HTTP 401 Unauthorized
         }
 
         //Creates and signs a JWT for the given username and role
