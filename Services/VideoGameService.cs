@@ -18,17 +18,18 @@ namespace VideoGameCharacterApi.Services
                 Game = character.Game,
                 Role = character.Role,
             };
+
             //Save the new character to the database
             _context.Characters.Add(newCharacter);
             await _context.SaveChangesAsync();
 
+            //Log the successful creation event
             logger.LogInformation(
                 "Character {CharacterId} was created for the game {Game}with the role {Role}.",
                 newCharacter.Id,
                 newCharacter.Game,
                 newCharacter.Role
                 );
-
             //Return the saved character as a response DTO
             return new CharacterResponseDto
             {
@@ -39,25 +40,32 @@ namespace VideoGameCharacterApi.Services
             };
         }
 
+
         public async Task<bool> DeleteCharacterAsync(int id)
         {
             var charToDelete = await _context.Characters.FindAsync(id);
-            if (charToDelete is null)
+
+            //Log a warning when the delete target does not exist
+            if (charToDelete is null) 
             {
                 logger.LogWarning(
                     "Delete requested for the character {CharacterId}, but no matching character was found.",
                     id);
                 return false;
             }
+
             _context.Characters.Remove(charToDelete);
             await _context.SaveChangesAsync();
+
+            //Log the successful deletion event
             logger.LogInformation(
                 "Character {CharacterId} was deleted successfully",
                 id);
             return true;
         }
 
-        //Queries the Characters table and returns every stored character
+
+        //Queries the Characters table and returns the requested paged result set
         public async Task<PagedResponseDto<CharacterResponseDto>> GetAllCharactersAsync(GetCharactersQuery query)
         {
             //Begin with Characters data source as the base query
@@ -109,7 +117,6 @@ namespace VideoGameCharacterApi.Services
                     Role = c.Role
                 })
                .ToListAsync(); //Execute the query and materialize the projected results as a list
-
             return new PagedResponseDto<CharacterResponseDto> //Return the paged response object, the paging metadata and the actual items for the current page
             {
                 Page = page,
@@ -132,24 +139,28 @@ namespace VideoGameCharacterApi.Services
                     Role=c.Role
                 })
                 .FirstOrDefaultAsync();
-
             return result;
         }
 
         public async Task<bool> UpdateCharacterAsync(int id, UpdateCharacterRequest character)
         {
             var existingCharacter = await _context.Characters.FindAsync(id);
+
             if (existingCharacter is null)
-            {
+            { //Log a warning when the update target does not exist
                 logger.LogWarning(
                     "Update requested for character {CharacterId}, but no matching character was found.",
                     id);
                 return false;
             }
+
             existingCharacter.Name = character.Name;
             existingCharacter.Game = character.Game;
             existingCharacter.Role = character.Role;
+
             await _context.SaveChangesAsync();
+            
+            //Log the successful update event
             logger.LogInformation(
                 "Character {CharacterId} was updated successfully.",
                 id);
