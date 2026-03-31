@@ -7,7 +7,7 @@ namespace VideoGameCharacterApi.Services
 {
     //Implementation Class for character-related operations
     //Uses CharacterDbContext to read and later modify character data in SQL Server
-    public class VideoGameService(CharacterDbContext _context) : IVideoGameCharacterService
+    public class VideoGameService(CharacterDbContext _context, ILogger<VideoGameService> logger) : IVideoGameCharacterService
     {
         public async Task<CharacterResponseDto> AddCharacterAsync(CreateCharacterRequest character)
         {
@@ -21,6 +21,14 @@ namespace VideoGameCharacterApi.Services
             //Save the new character to the database
             _context.Characters.Add(newCharacter);
             await _context.SaveChangesAsync();
+
+            logger.LogInformation(
+                "Character {CharacterId} was created for the game {Game}with the role {Role}.",
+                newCharacter.Id,
+                newCharacter.Game,
+                newCharacter.Role
+                );
+
             //Return the saved character as a response DTO
             return new CharacterResponseDto
             {
@@ -35,10 +43,17 @@ namespace VideoGameCharacterApi.Services
         {
             var charToDelete = await _context.Characters.FindAsync(id);
             if (charToDelete is null)
+            {
+                logger.LogWarning(
+                    "Delete requested for the character {CharacterId}, but no matching character was found.",
+                    id);
                 return false;
-
+            }
             _context.Characters.Remove(charToDelete);
             await _context.SaveChangesAsync();
+            logger.LogInformation(
+                "Character {CharacterId} was deleted successfully",
+                id);
             return true;
         }
 
@@ -124,14 +139,20 @@ namespace VideoGameCharacterApi.Services
         public async Task<bool> UpdateCharacterAsync(int id, UpdateCharacterRequest character)
         {
             var existingCharacter = await _context.Characters.FindAsync(id);
-            if (existingCharacter is null) 
+            if (existingCharacter is null)
+            {
+                logger.LogWarning(
+                    "Update requested for character {CharacterId}, but no matching character was found.",
+                    id);
                 return false;
-
+            }
             existingCharacter.Name = character.Name;
             existingCharacter.Game = character.Game;
             existingCharacter.Role = character.Role;
-
             await _context.SaveChangesAsync();
+            logger.LogInformation(
+                "Character {CharacterId} was updated successfully.",
+                id);
             return true;
         }
     }
