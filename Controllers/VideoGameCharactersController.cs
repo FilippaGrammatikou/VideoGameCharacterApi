@@ -14,10 +14,10 @@ public class VideoGameCharactersController(IVideoGameCharacterService service) :
     [Authorize(Policy ="UserOrAdmin")]
     [HttpGet]
     //Returns all characters through the service abstraction rather than accessing data directly.
-    public async Task<ActionResult<List<CharacterResponseDto>>> GetCharacters()
+    public async Task<ActionResult<PagedResponseDto<CharacterResponseDto>>> GetCharacters([FromQuery] GetCharactersQuery query)
     {
         //throw new InvalidOperationException("Deliberate test exception.");
-        return Ok(await service.GetAllCharactersAsync());
+        return Ok(await service.GetAllCharactersAsync(query));
     }
 
     //Returns a single character by id, or 404 if no matching character exists.
