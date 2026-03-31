@@ -11,8 +11,8 @@ namespace VideoGameCharacterApi.Controllers
     //Defines base route for controller: /api/auth
     [Route("api/[controller]")]
     [ApiController]
-    //IConfiguration injected so controller can read JWT settings
-    public class AuthController(IConfiguration configuration) : ControllerBase
+    //IConfiguration injected so controller can read JWT settings & ILogger is used to record meaningful authentication events
+    public class AuthController(IConfiguration configuration, ILogger<AuthController> logger) : ControllerBase
     {
         [AllowAnonymous]
         [HttpPost("login")]
@@ -21,6 +21,12 @@ namespace VideoGameCharacterApi.Controllers
             //Checks whether the provided credentials match the demo User account
             if (request.Username == "user" && request.Password == "user123")
             {
+                //Log the successful authentication event
+                logger.LogInformation(
+                    "Successfully login for username {Username} with role {Role}.",
+                    request.Username,
+                    "User");
+
                 return Ok(new LoginResponse
                 {
                     Token = GenerateToken("user", "User"),
@@ -31,12 +37,23 @@ namespace VideoGameCharacterApi.Controllers
             //Checks whether the provided credentials match the demo Admin account
             if (request.Username=="admin" &&  request.Password == "admin123")
             {
+                //Log the successful authentication event
+                logger.LogInformation(
+                    "Succesful login for username {Username} with role {Role}.",
+                    request.Username,
+                    "Admin");
+
                 return Ok(new LoginResponse
                 {
                     Token=GenerateToken("admin", "Admin"),
                     Role="Admin"
                 });
             }
+            //Log a failed login attempt
+            logger.LogWarning(
+                "Failed login attempt for username {Username}.",
+                request.Username);
+
             //If neither credential pair matches, authentication fails
             return Unauthorized(new { message = "Invalid username or password." }); //HTTP 401 Unauthorized
         }
