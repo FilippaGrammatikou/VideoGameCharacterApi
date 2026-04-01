@@ -25,7 +25,7 @@ namespace VideoGameCharacterApi.Services
 
             //Log the successful creation event
             logger.LogInformation(
-                "Character {CharacterId} was created for the game {Game}with the role {Role}.",
+                "Character {CharacterId} was created for the game {Game} with the role {Role}.",
                 newCharacter.Id,
                 newCharacter.Game,
                 newCharacter.Role
