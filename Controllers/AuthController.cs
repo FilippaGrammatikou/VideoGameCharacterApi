@@ -23,7 +23,7 @@ namespace VideoGameCharacterApi.Controllers
             {
                 //Log the successful authentication event
                 logger.LogInformation(
-                    "Successfully login for username {Username} with role {Role}.",
+                    "Successful login for username {Username} with role {Role}.",
                     request.Username,
                     "User");
 
