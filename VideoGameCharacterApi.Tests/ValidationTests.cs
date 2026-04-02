@@ -40,14 +40,13 @@ public class ValidationTests : IClassFixture<CustomWebApplicationFactory>
             new AuthenticationHeaderValue("Bearer", token);
 
         var invalidRequest = new
-        {  //Arrange:
-            //These values are intentionally empty so they violate the validation rules defined in the request DTO
+        {  //Arrange: These values are intentionally empty so they violate the validation rules defined in the request DTO
             name = "",
             game = "",
             role = ""
         };
-        //Act:
-        //Send the invalid request to the create endpoint as JSON
+
+        //Act: Send the invalid request to the create endpoint as JSON
         var response = await _client.PostAsJsonAsync("/api/VideoGameCharacters", invalidRequest);
 
         //Assert:
