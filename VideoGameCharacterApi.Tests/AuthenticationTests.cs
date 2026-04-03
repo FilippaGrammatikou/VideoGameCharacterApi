@@ -24,7 +24,7 @@ public class AuthenticationTests : IClassFixture<CustomWebApplicationFactory>
             Password = "admin123"
         };
 
-        // Act:Send the login request to the auth endpoint
+        //Act:Send the login request to the auth endpoint
         var response = await _client.PostAsJsonAsync("/api/Auth/login", loginRequest);
 
         //Assert:First confirm that the login request succeeded with HTTP 200
