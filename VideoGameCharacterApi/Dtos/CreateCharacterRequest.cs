@@ -12,7 +12,7 @@ namespace VideoGameCharacterApi.Dtos
         [StringLength(100, ErrorMessage = "Game cannot exceed 100 characters.")]
         public string Game { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Role is required.")]
+        [Required(ErrorMessage = "Role is required.")] //needs rework regarding regex
         [RegularExpression(
             "^(Protagonist|Hero|Antagonist|Villain)$",
             ErrorMessage = "Role must be one of: Protagonist, Hero, Antagonist, Villain.")]
