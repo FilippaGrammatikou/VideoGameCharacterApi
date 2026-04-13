@@ -4,7 +4,7 @@ using Xunit;
 
 namespace VideoGameCharacterApi.Tests;
 
-//Integration tests for authorization behavior
+//Integration tests for authorization behavior,verifies that protected endpoints reject requests when no authentication token is supplied
 public class AuthorizationTests : IClassFixture<CustomWebApplicationFactory>
 {
     //HttpClient acts as the test client that sends HTTP requests to the in-memory version of the API
