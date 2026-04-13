@@ -45,9 +45,9 @@ public class SuccessEndpointTests : IClassFixture<CustomWebApplicationFactory>
         //Build a valid request body.
         var request = new
         {
-            name = "Barret",
+            name = "Sephiroth",
             game = "Final Fantasy VII",
-            role = "Hero"
+            role = "villain"
         };
 
         //Act:Send the authenticated request to the protected create endpoint
