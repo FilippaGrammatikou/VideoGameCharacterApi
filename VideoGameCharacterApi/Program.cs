@@ -73,7 +73,12 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-app.UseHttpsRedirection();
+//Enable HTTPS redirection only during local development
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
 app.UseExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
