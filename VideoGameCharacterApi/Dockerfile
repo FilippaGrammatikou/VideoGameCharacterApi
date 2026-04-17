@@ -21,6 +21,11 @@ RUN dotnet publish "VideoGameCharacterApi.csproj" -c Release -o /app/publish /p:
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 
+#Install curl so Docker can probe the API health endpoint from inside the container.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl \
+    && rm -rf /var/lib/apt/lists/*
+
 #Copy the published output from the build stage.
 COPY --from=build /app/publish .
 
@@ -29,6 +34,10 @@ EXPOSE 8080
 
 #Tell ASP.NET Core to listen on port 8080 inside the container.
 ENV ASPNETCORE_URLS=http://+:8080
+
+#Let Docker verify that the API is responding correctly.
+HEALTHCHECK --interval=15s --timeout=5s --start-period=20s --retries=10 \
+  CMD curl -f http://localhost:8080/health || exit 1
 
 #Start the API when the container launches.
 ENTRYPOINT ["dotnet", "VideoGameCharacterApi.dll"]

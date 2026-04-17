@@ -11,7 +11,7 @@ services:
       - "14333:1433"
     volumes:
       - sql_data:/var/opt/mssql
-      - ./database:/var/opt/mssql/backup:ro
+      - ./Database:/var/opt/mssql/backup:ro
     healthcheck:
       test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q 'SELECT 1' || exit 1"]
       interval: 10s
@@ -28,7 +28,7 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - ./database:/var/opt/mssql/backup:ro
+      - ./Database:/var/opt/mssql/backup:ro
     entrypoint: ["/bin/bash", "/var/opt/mssql/backup/restore-db.sh"]
 
   api:
