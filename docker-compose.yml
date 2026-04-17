@@ -17,13 +17,39 @@
       retries: 10
       start_period: 20s
 
+  db-restore:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: videogamecharacterapi-db-restore
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./database:/var/opt/mssql/backup:ro
+    entrypoint: ["/bin/bash", "-c"]
+    command: >
+      /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P 'YourStrong!Passw0rd' -C -Q "
+      IF DB_ID(N'VideoGameCharactersDb') IS NULL
+      BEGIN
+        RESTORE DATABASE [VideoGameCharactersDb]
+        FROM DISK = N'/var/opt/mssql/backup/VideoGameCharactersDb.bak'
+        WITH
+          MOVE N'VideoGameCharactersDb' TO N'/var/opt/mssql/data/VideoGameCharactersDb.mdf',
+          MOVE N'VideoGameCharactersDb_log' TO N'/var/opt/mssql/data/VideoGameCharactersDb_log.ldf',
+          RECOVERY,
+          REPLACE;
+      END
+      "
+
   api:
     build:
       context: .
       dockerfile: VideoGameCharacterApi/Dockerfile
     container_name: videogamecharacterapi-api
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+      db-restore:
+        condition: service_completed_successfully
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
       ConnectionStrings__DefaultConnection: "Server=db;Database=VideoGameCharactersDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True"
