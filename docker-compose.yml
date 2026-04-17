@@ -17,7 +17,7 @@
       retries: 10
       start_period: 20s
 
-  db-restore:
+    db-restore:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: videogamecharacterapi-db-restore
     depends_on:
@@ -26,7 +26,13 @@
     volumes:
       - ./database:/var/opt/mssql/backup:ro
     entrypoint: ["/bin/bash", "-c"]
-    command: >
+    command: |
+      for i in {1..20}; do
+        /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P 'YourStrong!Passw0rd' -C -Q "SELECT 1" && break
+        echo "Waiting for SQL Server on host 'db'..."
+        sleep 5
+      done
+
       /opt/mssql-tools18/bin/sqlcmd -S db -U sa -P 'YourStrong!Passw0rd' -C -Q "
       IF DB_ID(N'VideoGameCharactersDb') IS NULL
       BEGIN
