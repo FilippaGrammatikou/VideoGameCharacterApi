@@ -79,6 +79,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHttpsRedirection();
 }
 
+//Redirect requests from the root URL to the Scalar API documentation UI
+app.MapGet("/", () => Results.Redirect("/scalar"));
+
 app.UseExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
