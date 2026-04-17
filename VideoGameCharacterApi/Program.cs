@@ -50,6 +50,9 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 //OpenAPI structure for eg. documentations
 builder.Services.AddOpenApi();
 
+//API Health Monitoring
+builder.Services.AddHealthChecks();
+
 //Add the database context to the application and tell Entity Framework to connect to SQL Server
 builder.Services.AddDbContext<CharacterDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -82,6 +85,7 @@ if (!app.Environment.IsDevelopment())
 //Redirect requests from the root URL to the Scalar API documentation UI
 app.MapGet("/", () => Results.Redirect("/scalar"));
 
+app.MapHealthChecks("/health");
 app.UseExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
