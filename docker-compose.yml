@@ -17,7 +17,7 @@
       retries: 10
       start_period: 20s
 
-    db-restore:
+  db-restore:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: videogamecharacterapi-db-restore
     depends_on:
