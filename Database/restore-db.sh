@@ -20,7 +20,7 @@ done
 
 echo "Starting database restore..."
 
-/opt/mssql-tools18/bin/sqlcmd -S db -U sa -P 'YourStrong!Passw0rd' -C -Q "
+/opt/mssql-tools18/bin/sqlcmd -S db -U sa -P 'YourStrong!Passw0rd' -C -b -Q "
 IF DB_ID(N'VideoGameCharactersDb') IS NULL
 BEGIN
   RESTORE DATABASE [VideoGameCharactersDb]

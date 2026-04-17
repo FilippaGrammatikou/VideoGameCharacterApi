@@ -1,10 +1,10 @@
 ﻿services:
   db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: mcr.microsoft.com/mssql/server:2025-latest
     container_name: videogamecharacterapi-db
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: "YourStrong!Passw0rd"
+      MSSQL_SA_PASSWORD: "YourStrong!Passw0rd"
     ports:
       - "14333:1433"
     volumes:
@@ -18,7 +18,7 @@
       start_period: 20s
 
   db-restore:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: mcr.microsoft.com/mssql/server:2025-latest
     container_name: videogamecharacterapi-db-restore
     depends_on:
       db:
