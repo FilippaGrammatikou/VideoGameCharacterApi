@@ -1,7 +1,7 @@
 <p align="center">
-  <img src="./docs/assets/aspnet.png" alt="ASP.NET logo" width="270" />
-  <img src="./docs/assets/entityframework.png" alt="Entity Framework Core logo" width="270" />
-  <img src="./docs/assets/sqlserver.png" alt="SQL Server logo" width="270" />
+  <img src="./docs/assets/aspnet.png" alt="ASP.NET logo" width="210" />
+  <img src="./docs/assets/entityframework.png" alt="Entity Framework Core logo" width="210" />
+  <img src="./docs/assets/sqlserver.png" alt="SQL Server logo" width="210" />
 </p>
 
 <h1 align="center">VideoGameCharacterApi</h1>
