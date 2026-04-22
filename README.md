@@ -1,15 +1,15 @@
-<!-- Add the finished banner image at the path below once it exists. -->
-
-<!-- <p align="center"><img src="docs/images/readme-banner.png" alt="VideoGameCharacterApi banner" width="100%" /></p> -->
+<p align="center">
+  <img src="./docs/assets/aspnet.png" alt="ASP.NET logo" width="270" />
+  <img src="./docs/assets/entityframework.png" alt="Entity Framework Core logo" width="270" />
+  <img src="./docs/assets/sqlserver.png" alt="SQL Server logo" width="270" />
+</p>
 
 <h1 align="center">VideoGameCharacterApi</h1>
 
 <p align="center"><em>Focused backend learning project built to strengthen practical knowledge in ASP.NET Core Web API, Entity Framework Core, SQL Server, JWT authentication, testing, and Dockerized local setup</em></p>
 
 <p align="center">
-  <img alt=".NET 10" src="https://img.shields.io/badge/.NET%2010-081120?style=for-the-badge&logo=dotnet&logoColor=FFD60A" />
   <img alt="ASP.NET Core" src="https://img.shields.io/badge/ASP.NET%20Core-0B1020?style=for-the-badge&logo=dotnet&logoColor=FF2DAA" />
-  <img alt="EF Core" src="https://img.shields.io/badge/EF%20Core-081120?style=for-the-badge&logo=databricks&logoColor=00E5FF" />
   <img alt="SQL Server" src="https://img.shields.io/badge/SQL%20Server-0B1020?style=for-the-badge&logo=microsoftsqlserver&logoColor=FFD60A" />
   <img alt="JWT" src="https://img.shields.io/badge/JWT-081120?style=for-the-badge&logo=jsonwebtokens&logoColor=FF2DAA" />
   <img alt="Scalar" src="https://img.shields.io/badge/Scalar-0B1020?style=for-the-badge&logoColor=00E5FF" />
@@ -17,267 +17,285 @@
   <img alt="xUnit" src="https://img.shields.io/badge/xUnit-0B1020?style=for-the-badge&logoColor=FF2DAA" />
 </p>
 
-<p align="center">✦ ✦ ✦ ✦ ✦</p>
+</div>
 
 ---
 
-## ◈ Overview
+## Project Overview
 
-`VideoGameCharacterApi` is a deliberately scoped backend learning project. Instead of trying to become a large, endlessly expanding application, it focuses on strengthening practical knowledge in the backend concerns that matter most for a well-structured API: authentication, authorization, validation, query handling, predictable error responses, health checks, SQL Server persistence, test coverage, and Dockerized startup.
+`VideoGameCharacterApi` is a backend-focused ASP.NET Core Web API project created to strengthen practical knowledge in modern server-side development through a structured, implementation-driven approach.
 
-Its purpose is to deepen understanding of how a compact API can be structured, secured, tested, and documented with clearer technical intent.
+Rather than stopping at basic CRUD, the project is designed to consolidate core backend concepts in a more complete application setting: layered architecture, DTO-based API contracts, Entity Framework Core persistence, SQL Server integration, JWT authentication, role-based authorization, validation, automated testing, and Docker-based local delivery. The goal is to develop a project that is technically coherent, readable, and closer to a realistic engineering workflow than to an isolated tutorial exercise.
 
----
+### Project Intent
 
-## ◈ Scope
-
-This repository is meant to demonstrate backend hardening fundamentals rather than domain complexity.
-
-### Core focus areas
-
-* layered API structure
-* EF Core data access
-* SQL Server persistence
-* DTO-based contracts
-* JWT authentication
-* role-based authorization
-* request validation
-* query normalization and pagination
-* centralized exception handling
-* health monitoring
-* Docker-based local environment
-* integration and rules-focused tests
+| Goal                       | Description                                                                       |
+| -------------------------- | --------------------------------------------------------------------------------- |
+| **Backend Practice**       | Apply practical ASP.NET Core Web API design in a project with realistic structure |
+| **Engineering Discipline** | Use separation of concerns, explicit DTOs, structured errors, and tests           |
+| **Database Integration**   | Model persistence through EF Core and SQL Server                                  |
+| **Security Fundamentals**  | Introduce JWT authentication and role-based authorization                         |
+| **Delivery Awareness**     | Run the application in a reproducible environment through Docker                  |
 
 ---
 
-## ◈ Technology stack
+## Core Capabilities
 
-| Area          | Technology                                 | Role                                       |
-| ------------- | ------------------------------------------ | ------------------------------------------ |
-| Runtime       | .NET 10                                    | application platform                       |
-| API           | ASP.NET Core Web API                       | routing, middleware, controllers           |
-| Data access   | Entity Framework Core                      | ORM and query composition                  |
-| Database      | SQL Server                                 | relational persistence                     |
-| API reference | OpenAPI + Scalar                           | endpoint inspection and manual testing     |
-| Security      | JWT Bearer + authorization policies        | authentication and access control          |
-| Containers    | Docker + Docker Compose                    | reproducible local setup                   |
-| Testing       | xUnit + `Microsoft.AspNetCore.Mvc.Testing` | integration and rules-focused verification |
-
----
-
-## ◈ Feature snapshot
-
-| Capability         | Status      | Notes                                                             |
-| ------------------ | ----------- | ----------------------------------------------------------------- |
-| CRUD endpoints     | Implemented | character create/read/update/delete                               |
-| Authentication     | Implemented | JWT returned from login endpoint                                  |
-| Authorization      | Implemented | separate policies for read vs write access                        |
-| Validation         | Implemented | data annotations on request DTOs                                  |
-| Filtering          | Implemented | by `Game` and `Role`                                              |
-| Sorting            | Implemented | by `Name`, `Game`, or `Role`                                      |
-| Pagination         | Implemented | normalized page and capped page size                              |
-| Exception handling | Implemented | centralized `ProblemDetails`-based handling                       |
-| Health checks      | Implemented | `/health` endpoint                                                |
-| Docker workflow    | Implemented | API + SQL Server + restore step                                   |
-| Tests              | Implemented | auth, authorization, validation, smoke, success-path, query rules |
+| Capability                           | Description                                                                    |
+| ------------------------------------ | ------------------------------------------------------------------------------ |
+| **Character Management**             | Create, retrieve, update, and delete video game character records              |
+| **DTO-Based Contracts**              | Request and response models are separated from persistence entities            |
+| **Filtering / Sorting / Pagination** | The list endpoint supports more realistic query behavior than a raw table dump |
+| **Validation**                       | DTO and query validation reduce invalid input reaching the service layer       |
+| **JWT Authentication**               | Login endpoint issues access tokens for protected operations                   |
+| **Role-Based Authorization**         | Administrative actions can be restricted by role                               |
+| **Structured Error Handling**        | ProblemDetails and a global exception handler improve response consistency     |
+| **Automated Tests**                  | Unit and integration tests verify key application behavior                     |
+| **Docker Delivery**                  | API and SQL Server can run together in a local containerized setup             |
 
 ---
 
-## ◈ Architecture at a glance
+## Technology Stack
+
+| Area                     | Technology                   |
+| ------------------------ | ---------------------------- |
+| **Language**             | C#                           |
+| **Runtime**              | .NET 10                      |
+| **Framework**            | ASP.NET Core Web API         |
+| **ORM**                  | Entity Framework Core        |
+| **Database**             | SQL Server                   |
+| **Authentication**       | JWT Bearer                   |
+| **API Documentation UI** | Scalar                       |
+| **OpenAPI**              | ASP.NET Core OpenAPI support |
+| **Testing**              | xUnit                        |
+| **Containerization**     | Docker / Docker Compose      |
+
+---
+
+## Architecture Overview
+
+```mermaid
+flowchart LR
+    A[Client / Scalar / API Consumer] --> B[Controllers]
+    B --> C[Services]
+    C --> D[CharacterDbContext]
+    D --> E[(SQL Server)]
+```
+
+### Architectural Notes
+
+* Controllers remain thin and delegate logic to services.
+* Entities are not exposed directly to API consumers.
+* Query behavior is intentionally shaped through DTOs and dedicated rules.
+* Exception handling is centralized to avoid fragmented error responses.
+
+---
+
+## Repository Structure
 
 ```text
-Client
-  ↓
-Controllers
-  ↓
-Services
-  ↓
-CharacterDbContext
-  ↓
-SQL Server
-```
+VideoGameCharacterApi/
+├── Controllers/
+├── Data/
+├── Dtos/
+├── Infrastructure/
+├── Migrations/
+├── Models/
+├── Services/
+├── Properties/
+├── appsettings.json
+├── Dockerfile
+├── Program.cs
+├── VideoGameCharacterApi.csproj
+├── VideoGameCharacterApi.http
+└── README.md
 
-| Layer          | Responsibility                                             |
-| -------------- | ---------------------------------------------------------- |
-| Controllers    | HTTP routing, response selection, authorization attributes |
-| Services       | application logic, querying, pagination, mapping           |
-| DbContext      | EF Core access to the database                             |
-| DTOs           | request/response contract boundary                         |
-| Infrastructure | centralized exception handling                             |
-| Tests          | verification of selected API behavior                      |
-
-For the deeper design explanation, see `docs/architecture.md`.
-
----
-
-## ◈ Repository structure
-
-```text
-VideoGameCharacterApi-master/
-├── Database/
-│   ├── VideoGameCharactersDb.bak
-│   └── restore-db.sh
-├── VideoGameCharacterApi/
-│   ├── Controllers/
-│   ├── Data/
-│   ├── Dtos/
-│   ├── Infrastructure/
-│   ├── Migrations/
-│   ├── Models/
-│   ├── Properties/
-│   ├── Services/
-│   ├── Program.cs
-│   ├── appsettings.json
-│   ├── Dockerfile
-│   └── VideoGameCharacterApi.csproj
-├── VideoGameCharacterApi.Tests/
-├── docker-compose.yml
-└── .env.example
+VideoGameCharacterApi.Tests/
+├── ...
 ```
 
 ---
 
-## ◈ Security summary
+## Getting Started
 
-Authentication is token-based and authorization is policy-based.
+### Prerequisites
 
-| Policy        | Roles allowed   | Typical use                      |
-| ------------- | --------------- | -------------------------------- |
-| `UserOrAdmin` | `User`, `Admin` | read endpoints                   |
-| `AdminOnly`   | `Admin`         | create, update, delete endpoints |
+| Requirement        | Notes                                                   |
+| ------------------ | ------------------------------------------------------- |
+| **.NET SDK**       | .NET 10 SDK installed                                   |
+| **SQL Server**     | Local SQL Server instance available for non-Docker runs |
+| **IDE / Editor**   | Visual Studio or Visual Studio Code                     |
+| **Optional Tools** | SSMS, Scalar, Postman                                   |
 
-### Demo accounts
+### Local Run
 
-| Role  | Username | Password   |
-| ----- | -------- | ---------- |
-| User  | `user`   | `user123`  |
-| Admin | `admin`  | `admin123` |
+1. Clone the repository.
+2. Open the solution in Visual Studio.
+3. Confirm the local connection string in `appsettings.json` matches your SQL Server instance.
+4. Apply migrations if necessary.
+5. Start the API.
 
-> [!WARNING]
-> These credentials exist for development and testing only.
+### Local Development Notes
 
-For the full authentication flow, token behavior, and authorization details, see `docs/authentication.md`.
-
----
-
-## ◈ Main endpoints
-
-| Method   | Route                           | Access        | Purpose                |
-| -------- | ------------------------------- | ------------- | ---------------------- |
-| `POST`   | `/api/Auth/login`               | Anonymous     | issue JWT token        |
-| `GET`    | `/api/VideoGameCharacters`      | User or Admin | list characters        |
-| `GET`    | `/api/VideoGameCharacters/{id}` | User or Admin | retrieve one character |
-| `POST`   | `/api/VideoGameCharacters`      | Admin         | create character       |
-| `PUT`    | `/api/VideoGameCharacters/{id}` | Admin         | update character       |
-| `DELETE` | `/api/VideoGameCharacters/{id}` | Admin         | delete character       |
-| `GET`    | `/health`                       | Anonymous     | health probe           |
-
-For the complete endpoint contract, query parameters, and request/response examples, see `docs/endpoints.md`.
+| Topic                               | Note                                                                                              |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **Base URL**                        | The host may run without a root webpage because this is an API project, not a traditional website |
+| **Recommended Browser Entry Point** | Use the Scalar route rather than expecting the root URL to behave like a homepage                 |
+| **Protected Endpoints**             | Browser address bars do not conveniently attach bearer tokens; use Scalar or another API client   |
 
 ---
 
-## ◈ Quick start
+## Running with Docker
 
-### Local run
+Docker is included to reduce environment setup friction and make the local delivery story more reproducible.
 
-1. Configure the local SQL Server connection string in `VideoGameCharacterApi/appsettings.json`.
-2. Restore dependencies.
-3. Run the API project.
-4. Open the local development URL.
-5. Authenticate through the login endpoint and test the protected routes.
+Without Docker, another developer can still run the project manually, but they must reproduce the runtime, database, configuration, and startup sequencing on their own machine.
 
-```bash
-dotnet restore
-dotnet run --project VideoGameCharacterApi/VideoGameCharacterApi.csproj
-```
-
-| Mode  | URL                      |
-| ----- | ------------------------ |
-| HTTP  | `http://localhost:5153`  |
-| HTTPS | `https://localhost:7033` |
-
-> [!NOTE]
-> In development mode, the root route redirects to Scalar, and the application applies pending EF Core migrations on startup.
-
-For the full local setup guide, see `docs/setup-local.md`.
-
----
-
-## ◈ Docker quick start
-
-The repository also supports containerized startup with SQL Server, a restore step for the database backup, and the API service.
+### Start Command
 
 ```bash
 docker compose up --build
 ```
 
-| Service         | URL                            |
-| --------------- | ------------------------------ |
-| API             | `http://localhost:8080`        |
-| Health endpoint | `http://localhost:8080/health` |
+### Docker Routes
 
-### Required environment values
+| Purpose          | URL                                     |
+| ---------------- | --------------------------------------- |
+| **API Base URL** | `http://localhost:8080`                 |
+| **Scalar UI**    | `http://localhost:8080/scalar`          |
+| **OpenAPI JSON** | `http://localhost:8080/openapi/v1.json` |
 
-| Variable                 | Purpose                  |
-| ------------------------ | ------------------------ |
-| `MSSQL_SA_PASSWORD`      | SQL Server SA password   |
-| `JWT_KEY`                | JWT signing key          |
-| `JWT_ISSUER`             | token issuer             |
-| `JWT_AUDIENCE`           | token audience           |
-| `ASPNETCORE_ENVIRONMENT` | ASP.NET Core environment |
+### Important Route Clarification
 
-Copy `.env.example` to `.env` and replace the placeholder values before starting the containers.
+| Route                                   | Expected Behavior                              |
+| --------------------------------------- | ---------------------------------------------- |
+| `http://localhost:8080/`                | May return `404` if no root endpoint is mapped |
+| `http://localhost:8080/scalar`          | Main interactive API testing interface         |
+| `http://localhost:8080/openapi/v1.json` | Raw OpenAPI specification                      |
+| `http://localhost:8080/api/...`         | Actual API endpoints                           |
 
-For the complete container workflow and restore behavior, see `docs/setup-docker.md` and `docs/configuration.md`.
+A `404` at the root URL does not mean the API is broken. It usually means that no homepage route was defined.
 
 ---
 
-## ◈ Testing
+## Authentication and Authorization
 
-The test project verifies selected application behavior rather than only isolated methods.
+The API uses JWT Bearer authentication.
 
-| Test area        | Purpose                            |
-| ---------------- | ---------------------------------- |
-| Authentication   | valid login returns token          |
-| Authorization    | missing token returns `401`        |
-| Forbidden access | insufficient role returns `403`    |
-| Validation       | invalid request body returns `400` |
-| Success path     | valid admin request returns `201`  |
-| Smoke testing    | application starts and responds    |
-| Query rules      | page and page-size normalization   |
+### Demo Accounts
+
+| Username | Password   | Role    | Intended Use                                |
+| -------- | ---------- | ------- | ------------------------------------------- |
+| `user`   | `user123`  | `User`  | Basic authenticated access                  |
+| `admin`  | `admin123` | `Admin` | Access to protected administrative behavior |
+
+### Authentication Flow
+
+1. Send credentials to `POST /api/Auth/login`.
+2. Receive a JWT token.
+3. Attach the token as `Authorization: Bearer <token>`.
+4. Access protected endpoints according to role requirements.
+
+---
+
+## API Summary
+
+| Method   | Route                           | Description                                        |
+| -------- | ------------------------------- | -------------------------------------------------- |
+| `POST`   | `/api/Auth/login`               | Authenticates a user and returns a JWT             |
+| `GET`    | `/api/VideoGameCharacters`      | Returns paginated and filterable character results |
+| `GET`    | `/api/VideoGameCharacters/{id}` | Returns a single character by identifier           |
+| `POST`   | `/api/VideoGameCharacters`      | Creates a new character                            |
+| `PUT`    | `/api/VideoGameCharacters/{id}` | Updates an existing character                      |
+| `DELETE` | `/api/VideoGameCharacters/{id}` | Deletes a character                                |
+
+### Query Surface
+
+| Query Feature        | Purpose                                        |
+| -------------------- | ---------------------------------------------- |
+| **Pagination**       | Controls page number and page size             |
+| **Filtering**        | Narrows results by fields such as game or role |
+| **Sorting**          | Orders results by supported sort fields        |
+| **Query Validation** | Rejects malformed or unsupported input         |
+
+### Example Request
+
+```http
+GET /api/VideoGameCharacters?page=1&pageSize=10&game=Tekken&sortBy=Name&sortDirection=asc
+```
+
+---
+
+## Validation and Error Handling
+
+### Validation Strategy
+
+| Area                     | Approach                                              |
+| ------------------------ | ----------------------------------------------------- |
+| **Request DTOs**         | Data annotation-based validation                      |
+| **Query Input**          | Explicit query rules for pagination and list behavior |
+| **Model Binding**        | ASP.NET Core request binding and validation pipeline  |
+| **Unhandled Exceptions** | Global exception handler                              |
+
+### Error Response Strategy
+
+* Client-side validation issues produce structured client-error responses.
+* Unhandled exceptions are centralized instead of being scattered across controllers.
+* ProblemDetails support improves consistency and readability.
+
+### ProblemDetails Notes
+
+The project uses a standardized ProblemDetails-oriented error strategy so that consumers receive more coherent error payloads instead of ad hoc strings.
+
+---
+
+## Database and Migrations
+
+The application uses Entity Framework Core with SQL Server.
+
+| Topic                 | Description                                                                 |
+| --------------------- | --------------------------------------------------------------------------- |
+| **DbContext**         | `CharacterDbContext`                                                        |
+| **ORM**               | Entity Framework Core                                                       |
+| **Schema Management** | EF Core migrations                                                          |
+| **Container Support** | Schema can be applied automatically at startup for containerized local runs |
+
+### Database Notes
+
+* Migrations are tracked in the `Migrations/` folder.
+* SQL Server is the persistence target both in manual local runs and in Docker-based runs.
+* The Docker workflow is designed to support reproducible local delivery.
+
+---
+
+## Testing
+
+### Current Test Scope
+
+| Test Category                            | Purpose                                               |
+| ---------------------------------------- | ----------------------------------------------------- |
+| **Query Rule Tests**                     | Verify pagination and query-rule behavior             |
+| **Authentication / Authorization Tests** | Validate access control boundaries                    |
+| **Success Endpoint Tests**               | Confirm correct behavior on valid paths               |
+| **Integration Test Host Setup**          | Shared bootstrapper via `CustomWebApplicationFactory` |
+
+### Run Tests
 
 ```bash
 dotnet test
 ```
 
-For the full testing breakdown, see `docs/testing.md`.
-
 ---
 
-## ◈ Operational notes
+## Delivery Workflow
 
-| Behavior         | Current implementation                            |
-| ---------------- | ------------------------------------------------- |
-| Root route       | redirects to `/scalar` when Scalar is enabled     |
-| OpenAPI UI       | Scalar is mapped in development                   |
-| Health check     | exposed at `/health`                              |
-| Database startup | pending EF Core migrations are applied at startup |
-| Docker restore   | backup restore script runs before the API starts  |
-| Logging          | selected auth and service events are logged       |
+This repository includes delivery-oriented components that go beyond core CRUD logic.
 
----
+| Delivery Component      | Purpose                                             |
+| ----------------------- | --------------------------------------------------- |
+| `Dockerfile`            | Packages the API for containerized execution        |
+| `docker-compose.yml`    | Starts the API and SQL Server together              |
+| GitHub Actions Pipeline | Intended to automate restore, build, and test steps |
 
-## ◈ Documentation map
 
-To avoid duplication, deeper topics live in dedicated files:
-
-| File                            | Purpose                                                 |
-| ------------------------------- | ------------------------------------------------------- |
-| `docs/architecture.md`          | internal structure and request flow                     |
-| `docs/setup-local.md`           | local setup and verification                            |
-| `docs/setup-docker.md`          | Docker services and restore workflow                    |
-| `docs/configuration.md`         | configuration keys and environment variables            |
-| `docs/authentication.md`        | login flow, JWT, and policies                           |
-| `docs/endpoints.md`             | endpoint reference and examples                         |
-| `docs/testing.md`               | test structure and execution                            |
-| `docs/errors-and-validation.md` | validation, status codes, and `ProblemDetails` behavior |
+It is designed to show progression from foundational ASP.NET Core practice toward a more disciplined and better-documented API project.
