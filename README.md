@@ -246,6 +246,10 @@ It covers query-rule verification, authentication and authorization boundaries, 
 dotnet test
 ```
 
+### Continuous Integration
+
+The repository includes a GitHub Actions workflow that automatically restores dependencies, builds the solution, and runs the test suite on push and pull request activity. This provides a basic CI check for repository health and helps catch build or test regressions early.
+
 ### Delivery Components
 
 | Component               | Purpose                                              |
