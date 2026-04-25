@@ -70,3 +70,9 @@ The most useful browser entry point is the Scalar route. The base URL may return
 The Docker setup is not limited to starting an empty SQL Server container. It includes a restore step so the application can run against the intended database state rather than against a blank schema only.
 
 This is handled through the dedicated restore container and the restore script under `database/`.
+
+## Continuous Integration
+
+The repository includes a GitHub Actions workflow for basic continuous integration. The workflow restores dependencies, builds the solution, and runs the automated test suite.
+
+This keeps the repository under a repeatable verification step in addition to local execution.
