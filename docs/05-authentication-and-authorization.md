@@ -100,7 +100,3 @@ The project currently defines two authorization policies.
 | `DELETE /api/VideoGameCharacters/{id}` | `AdminOnly`   |
 
 Requests made with a valid token but insufficient privileges return `403 Forbidden`.
-
-## Summary
-
-Authentication is token-based, while authorization is policy-based. Login issues a JWT, token validation is enforced by the API runtime, and endpoint access is restricted according to role through named authorization policies.
