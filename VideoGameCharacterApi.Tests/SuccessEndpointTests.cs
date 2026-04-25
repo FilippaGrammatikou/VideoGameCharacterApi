@@ -6,7 +6,7 @@ using Xunit;
 
 namespace VideoGameCharacterApi.Tests;
 
-//Integration tests for successful access to protected endpoints
+// Integration tests for successful access to protected endpoints
 public class SuccessEndpointTests : IClassFixture<CustomWebApplicationFactory>
 {
     private readonly HttpClient _client;
@@ -16,7 +16,6 @@ public class SuccessEndpointTests : IClassFixture<CustomWebApplicationFactory>
         _client = factory.CreateClient();
     }
 
-    //Helper method:Log in as Admin and return a valid JWT token
     private async Task<string> GetAdminTokenAsync()
     {
         var loginRequest = new LoginRequest
@@ -36,24 +35,23 @@ public class SuccessEndpointTests : IClassFixture<CustomWebApplicationFactory>
     [Fact]
     public async Task CreateCharacter_WithAdminTokenAndValidBody_ReturnsCreated()
     {
-        //Arrange:Obtain a valid admin token and attach it to the request
         var token = await GetAdminTokenAsync();
 
         _client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", token);
 
-        //Build a valid request body.
-        var request = new
+        var request = new CreateCharacterRequest
         {
-            name = "Sephiroth",
-            game = "Final Fantasy VII",
-            role = "villain"
+            Name = "Sephiroth",
+            Game = "Final Fantasy VII",
+            Role = "villain"
         };
 
-        //Act:Send the authenticated request to the protected create endpoint
         var response = await _client.PostAsJsonAsync("/api/VideoGameCharacters", request);
+        var responseBody = await response.Content.ReadAsStringAsync();
 
-        //Assert:A valid authenticated admin request should succeed with HTTP 201 Created
-        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        Assert.True(
+            response.StatusCode == HttpStatusCode.Created,
+            $"Expected 201 Created but got {(int)response.StatusCode} {response.StatusCode}. Response body: {responseBody}");
     }
 }
