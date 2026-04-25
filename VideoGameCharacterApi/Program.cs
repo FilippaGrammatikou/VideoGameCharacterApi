@@ -63,8 +63,10 @@ builder.Services.AddScoped<IVideoGameCharacterService, VideoGameService>();
 var app = builder.Build();
 
 //Applies missing migrations to the database,when the app starts(so that scema can exist in new environment)
-using (var scope = app.Services.CreateScope())
+//Tries to run real database migrations when the app is not running in the Testing environment
+if (!app.Environment.IsEnvironment("Testing"))
 {
+    using var scope = app.Services.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<CharacterDbContext>();
     dbContext.Database.Migrate();
 }
